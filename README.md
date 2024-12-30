@@ -50,3 +50,55 @@ programa depende de como os dados se movem entre essas etapas. Em algumas situa�
 etapas podem ser executadas em paralelom pois uma não depende dos dados gerados pela
 anterior. A concorrência é útil quando é preciso combinar dados de várias operações que podem ser
 realizadas de forma independente.
+
+---
+
+# Thread e Goroutine
+
+Goroutine: É uma abstração leve sobre threads, gerenciadas pelo runtime do Go. Ela é muito mais
+leve e eficiente em termos de recursos do que as threads tradicionais do sistema operacional. O Go
+pode executar milhares de goroutines em um único programa sem grandes impactos de memória ou
+processamento.
+
+Thread: Uma thread é uma unidade de execução do sistema operacional. Criar e gerenciar threads
+pode ser custoso, pois o sistema operacional precisa reservar mais recursos (como memória e tempo
+de CPU) para cada uma.
+
+## Principais diferenças
+
+### Leveza
+
+As goroutines são muito mais leves que as threads tradicionais. Cada goroutine começa com um
+stack de apenas 2 KB, enquanto uma thread do sistema operacional normalmente inicia com um
+stack de 1 MB ou mais. Isso significa que você pode criar milhares de goroutines sem problemas de
+consumo de memória, algo impraticável com threads devido ao alto custo de criação e consumo de memória.
+
+### Escalonamento
+
+No Go, o runtime gerencia as goroutines e as distribui automaticamente para um número limitado
+de threads do sistema operacional, usando um escalonador cooperativo. Isso significa que o runtime
+decide quando cada goroutine deve ser pausada ou retomada. Em contraste, as threads são
+escalonadas diretamente pelo sistema operacional, o que pode ser menos eficiente, especialmente
+em programas com muitas threads.
+
+### Múltiplas goroutines por thread
+
+Em um thread do sistema operacional, apenas uma tarefa pode ser executada por vez. O runtime
+do Go permite que várias goroutines sejam executadas dentro de uma única thread e, quando
+necessário, ajusta dinamicamente o uso das threads. Isso economiza recursos e reduz a sobrecarga
+em comparação com as threads, onde cada tarefa exige uma thread exclusiva e um contexto
+separado.
+
+### Gerenciamento pelo Go runtime
+
+As goroutines são interamente gerenciadas pelo runtime de Go, enquanto as threads são
+gerenciadas pelo sistema operacional. Esse gerenciamento direto pelo Go oferece mais controle e
+eficiência para lidar com a concorrência. Como resultado, o uso de goroutines é mais leves e
+simplificado, permitindo que o runtime ajuste as goroutines conforme as necessidades do programa
+sem depender diretamente das capacidades do sistema operacional.
+
+> Portanto, goroutines não são threads diretamente, mas são executadas sobre threads,
+oferecendo uma forma mais eficiente e escalável e lidar com a concorrência em comparação
+com o uso direto de threads.
+
+---
